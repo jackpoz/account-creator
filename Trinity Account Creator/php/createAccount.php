@@ -49,7 +49,7 @@
     // Get the SHA1 encrypted password.
     list($salt, $verifier) = $db->getRegistrationData($username, $password);
     
-    $accountCreateQuery = "INSERT INTO account(username, salt, verifier, email) VALUES(?, ?, ?)";
+    $accountCreateQuery = "INSERT INTO account(username, salt, verifier, email) VALUES(?, ?, ?, ?)";
     $accountCreateParams = array($username, $salt, $verifier, $email);
     
     // Execute the query.

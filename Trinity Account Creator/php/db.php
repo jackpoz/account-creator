@@ -122,7 +122,7 @@
       $salt = random_bytes(32);
       
       // calculate verifier using this salt
-      $verifier = calculateSRP6Verifier($username, $password, $salt);
+      $verifier = $this->calculateSRP6Verifier($username, $password, $salt);
 
       // done - this is what you put in the account table!
       return array($salt, $verifier);
