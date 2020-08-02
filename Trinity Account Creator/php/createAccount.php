@@ -7,7 +7,6 @@
   // Get POST data and validate.
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = validateInput($_POST['username']);
-    $email = validateInput($_POST['email']);
     $password = validateInput($_POST['password']);
   }
   
@@ -17,14 +16,7 @@
   if (!isset($password) || !is_string($password))
     throw new InvalidArgumentException("Password is invalid or empty.");
   
-  if (!isset($email))
-    throw new InvalidArgumentException("Email is empty.");
   
-  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    echo "1"; // Returns that email is invalid, to update status message.
-    return;
-  }
-
   try {
     
     // First, we need to check if the account name already exists.
@@ -50,7 +42,7 @@
     $shaPassword = $db->getShaPasswordHash($username, $password);
     
     $accountCreateQuery = "INSERT INTO account(username, sha_pass_hash, email) VALUES(?, ?, ?)";
-    $accountCreateParams = array($username, $shaPassword[0], $email);
+    $accountCreateParams = array($username, $shaPassword[0], "");
     
     // Execute the query.
     $db->insertQuery($accountCreateQuery, $accountCreateParams);
