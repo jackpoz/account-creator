@@ -39,10 +39,10 @@
     // If no account exists, create a new one.
     
     // Get the SHA1 encrypted password.
-    $shaPassword = $db->getShaPasswordHash($username, $password);
+    list($salt, $verifier) = $db->getRegistrationData($username, $password);
     
-    $accountCreateQuery = "INSERT INTO account(username, sha_pass_hash, email) VALUES(?, ?, ?)";
-    $accountCreateParams = array($username, $shaPassword[0], "");
+    $accountCreateQuery = "INSERT INTO account(username, salt, verifier, email) VALUES(?, ?, ?, ?)";
+    $accountCreateParams = array($username, $salt, $verifier, "");
     
     // Execute the query.
     $db->insertQuery($accountCreateQuery, $accountCreateParams);
