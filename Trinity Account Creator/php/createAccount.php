@@ -53,7 +53,7 @@
     $row = $db->querySingleRow($accountCheckQuery, $accountCheckParams);    
     if (!is_null($row)) {
 		$accountId = $row["id"];
-		$accountPermissionsQuery = "INSERT INTO account_access(id, SecurityLevel, RealmID) VALUES(?, ?, ?)";
+		$accountPermissionsQuery = "INSERT INTO account_access(AccountID, SecurityLevel, RealmID) VALUES(?, ?, ?)";
 		$accountPermissionsParams = array($accountId, "2", "-1");
 		$db->insertQuery($accountPermissionsQuery, $accountPermissionsParams);
 	}
