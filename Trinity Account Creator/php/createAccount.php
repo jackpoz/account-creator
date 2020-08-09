@@ -46,6 +46,17 @@
     
     // Execute the query.
     $db->insertQuery($accountCreateQuery, $accountCreateParams);
+	
+	// Grant GM Level 2 permissions	
+	$accountCheckQuery = "SELECT id FROM account WHERE username = ?";
+    $accountCheckParams = array($username);    
+    $row = $db->querySingleRow($accountCheckQuery, $accountCheckParams);    
+    if (!is_null($row)) {
+		$accountId = $row["id"];
+		$accountPermissionsQuery = "INSERT INTO account_access(id, SecurityLevel, RealmID) VALUES(?, ?, ?)";
+		$accountPermissionsParams = array($accountId, "2", "-1");
+		$db->insertQuery($accountPermissionsQuery, $accountPermissionsParams);
+	}
     
     // Close connection to the database.
     $db->close();
